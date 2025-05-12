@@ -1,0 +1,17 @@
+django==4.2.0
+djangorestframework
+djangorestframework-simplejwt
+django-jazzmin
+django-modeltranslation
+django-phonenumber-field
+django-phonenumbers
+psycopg2-binary
+drf-yasg
+setuptools
+python-dotenv
+django-ckeditor-5
+django-redis
+requests
+django-extensions
+Werkzeug
+pyOpenSSL

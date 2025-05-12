@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Car Shop">
+    <meta name="keywords" content="HVAC, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Car | Shop</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        @media (max-width: 768px) { 
+            #filterOffcanvas {
+                margin-top: 50px !important; /* Mobil versiya uchun faqat */
+            }
+            #sortOffcanvas {
+                margin-top: 50px !important; /* Mobil versiya uchun faqat */
+            }
+            /* Filter va saralash offcanvas'larining moslashuvchanligi */
+            .offcanvas {
+                width: 100% !important; /* To‘liq ekranni egallasin */
+                max-width: 480px !important; /* Juda katta bo‘lmasligi uchun */
+                left: 50%;
+                transform: translateX(-50%);
+                min-height: 60vh !important; /* Juda kichik bo‘lmasligi uchun */
+                overflow-y: auto !important; /* Ichidagi elementlar chiqishi uchun */
+                z-index: 1050 !important; /* Bootstrap default z-index */
+            }
+            /* Search qutisi va tugmalar orasidagi bo‘shliqni kamaytirish */
+            .car__search {
+                margin-bottom: 5px !important; /* Input va tugma orasidagi bo‘shliqni kamaytirish */
+            }
+            /* Tugmalar orasidagi bo‘shliqni kamaytirish */
+            .d-flex.gap-3 {
+                gap: 10px; /* Tugmalar orasidagi bo‘shliqni kamaytirish */
+            }
+            .btn-outline-dark {
+                margin-top: 0 !important; /* Tugma tepasidagi bo‘shliqni olib tashlash */
+            }
+            .canvas__open {
+                position: absolute; /* Joylashuvni qat'iy belgilash */
+                top: 5px; /* Yuqoriga ko‘tarish */
+                right: 15px; /* O‘ng tomonga surish */
+                font-size: 26px; /* Belgining kattaligi */
+                cursor: pointer; /* Hover bo‘lganda bosish effekti */
+            }
+            .row {
+                display: flex;
+                justify-content: space-between; /* Elementlar kengroq joylashishi uchun */
+                align-items: center; /* Vertikal markazlash */
+                height: 50px;
+            }
+            .car__filter__option {
+                margin-top: 50px !important; /* Elementni pastga surish */
+            }
+            .header__logo img {
+                max-width: 120px; /* Logoni kichikroq qilish */
+            }
+            .header__nav {
+                flex: 1; /* Menyuni moslash */
+                text-align: center; /* Menyuni joylash */
+            }
+            /* Offcanvas orqa foni */
+            .offcanvas-backdrop.show {
+                z-index: 1040 !important;
+            }
+        
+            /* Saralash oynasi pastda chiqishi uchun */
+            .offcanvas-bottom {
+                bottom: 0 !important;
+                width: 100% !important;
+                min-height: 40vh !important; /* Juda kichik bo‘lmasligi uchun */
+            }
+        
+            /* Offcanvas ochilganda yuqorida turishi */
+            .offcanvas.show {
+                z-index: 1070 !important; /* Eng yuqori qavatga chiqaramiz */
+                opacity: 1 !important;
+                display: block !important;
+            }
+        
+            /* Offcanvas ichidagi kontent */
+            .offcanvas-body {
+                padding: 20px !important;
+                text-align: left !important;
+                font-size: 16px !important;
+                color: black !important;
+                min-height: 50vh !important; /* Juda past bo‘lmasligi uchun */
+                overflow-y: auto !important; /* Ichidagi ma'lumotlar to‘liq ko‘rinishi uchun */
+            }
+        
+            /* Input maydonlarini o‘rtaga olish */
+            .price-input input {
+                width: 100% !important;
+                text-align: center;
+            }
+        
+            /* Tugmalarni moslash */
+            .car__filter__btn button {
+                width: 100%;
+                font-size: 14px;
+                padding: 10px;
+            }
+        
+            /* Saralash oynasidagi matnlar */
+            #sortOffcanvas h5 {
+                font-size: 14px;
+                padding: 10px;
+            }
+        
+            /* Kichik ekranlar uchun filter tugmalari */
+            .car__filter__option .btn {
+                width: 100% !important;
+                height: 45px !important;
+                font-size: 14px !important;
+                margin-top: 10px !important;
+            }
+        }
+        @media (min-width: 769px) { 
+            .half-width {
+                width: 50% !important; /* Kompyuterda 50% */
+                left: 25% !important;
+                height: auto !important;
+                border-radius: 10px;
+            }
+        }
+        @media (max-width: 992px) { /* Planshet va telefonlar uchun */
+            .header__logo {
+                margin-left: 0 !important; /* Logoni joyida qoldirish */
+                text-align: center;
+            }
+            .header__menu {
+                text-align: center;
+            }
+            .header__menu ul {
+                flex-direction: column; /* Mobil uchun vertikal menyu */
+                align-items: center;
+            }
+            .col-lg-6 {
+                transform: translateX(0) !important; /* Mobilda menyuni o‘rtaga olish */
+            }
+        }
+        /* Filter oynasi (hamma ekranda chiroyli chiqishi uchun) */
+        #filterOffcanvas {z-index: 1050 !important; /* Bootstrap modal z-indexiga moslash */
+            position: fixed;
+            z-index: 1060 !important; /* Bootstrap modal z-indexiga moslash */
+            position: fixed;
+            border-radius: 20px;
+            overflow-y: auto !important; /* Matn to‘g‘ri chiqishi uchun */
+            max-width: 600px;
+            margin: 0px;
+            font-size: 16px;
+            text-align: center;
+            height: 100vh !important; /* To‘liq ekran egallash uchun */
+            max-height: 100vh !important;
+        }
+        /* Saralash oynasi (mobil uchun optimizatsiya) */
+        #sortOffcanvas {
+            z-index: 1060 !important; /* Bootstrap modal z-indexiga moslash */
+            position: fixed;
+            height: 100vh !important; /* To‘liq ekran bo‘ylab ochilishi */
+            max-height: 35%; /* Cheklov bo‘lmasligi uchun */
+            border-radius: 20px;
+            overflow: hidden;
+            width: 45%; /* Ekranning 50% qismini egallaydi */
+            max-width: none;
+            font-size: 16px;
+            text-align: center;
+            left: 50%; /* Chap tomondan 50% masofada bo‘lishi uchun */
+            transform: translateX(-50%); /* O‘rta markazga kelishi uchun */
+            position: fixed;
+            top: 5% !important;
+        }
+
+        /* Mobil uchun maxsus */
+        @media (max-width: 576px) {
+            #filterOffcanvas {
+                width: 95% !important;  /* Mobil ekranga mos kelishi uchun */
+                height: 80% !important; /* Panel balandligi yetarlicha bo‘lishi uchun */
+                max-width: none !important;
+            }
+            #sortOffcanvas {
+                width: 95% !important; /* Ekranning 95% ini egallaydi */
+                height: 30% !important; /* Panel balandligi yetarlicha bo‘lishi uchun */
+                max-height: 20vh !important; /* Juda uzun bo‘lib ketmasligi uchun */
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            /* Orqa fonni yashirish */
+            .offcanvas-backdrop {
+                z-index: 1050 !important;
+                background: rgba(0, 0, 0, 0.5) !important; /* Yarim shaffof qora fon */
+            }
+            /* Agar xabar chiqsa va eski oynalar hamon ko‘rinayotgan bo‘lsa */
+            .offcanvas.show {
+                z-index: 1070 !important; /* Eng yuqori qavatga chiqaramiz */
+                opacity: 1 !important;
+                display: block !important;
+            }
+        }
+        /* Video add menu buttons style */
+        .video-upload-box {
+        width: 150px;
+        height: 150px;
+        border: 2px dashed #888;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        color: #888;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+        }
+
+        .video-upload-box:hover {
+            background-color: #f5f5f5;
+            border-color: #555;
+            color: #333;
+        }
+
+        #video-input {
+            display: none;
+        }
+
+        .preview-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .preview-wrapper video {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__widget">
+            <a href="#"><i class="fa fa-cart-plus"></i></a>
+            <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
+            <a href="#" class="primary-btn">Add Car</a>
+        </div>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="{% static 'img/logo.png' %}" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <ul class="offcanvas__widget__add">
+            <li><i class="fa fa-clock-o"></i> Week day: 08:00 am to 18:00 pm</li>
+            <li><i class="fa fa-envelope-o"></i> Info.colorlib@gmail.com</li>
+        </ul>
+        <div class="offcanvas__phone__num">
+            <i class="fa fa-phone"></i>
+            <span>(+12) 345 678 910</span>
+        </div>
+        <div class="offcanvas__social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-google"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <!-- Logo -->
+                <div class="col-lg-2" style="margin-left: 330px;">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <span class="fa fa-bars"></span>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+
+</html>
