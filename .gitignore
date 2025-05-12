@@ -1,0 +1,20 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore env files
+rest-api/.env
+bot/.env
+
+# Ignore all .env files
+*.env
+
+# Ignore virtualenv
+venv/
+env/
+
+# Ignore DB files
+*.sqlite3
+
+# Ignore OS files
+.DS_Store
